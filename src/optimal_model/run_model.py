@@ -1,5 +1,5 @@
 import random
-from optimal_model.model import run_model
+from optimal_model.model_gen import run_model
 import json
 
 
