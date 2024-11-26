@@ -136,6 +136,10 @@ def define_model(UEs, E2Ns, total_BW):
     # Initialize population
     population = init_population(possible_values_teste, population_length, fn_fitness, E2Ns_len)
 
+    if len(UEs) > 128:
+        pmut = 0.5
+    else:
+        pmut = 0.3
 
     # Run the genetic algorithm
     data = genetic_algorithm(
@@ -144,7 +148,7 @@ def define_model(UEs, E2Ns, total_BW):
         E2Ns_len,
         gene_pool=possible_values_teste,
         ngen=2000,
-        pmut=0.5
+        pmut=pmut
     )
 
     RF_energy = data[1][3]
