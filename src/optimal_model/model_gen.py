@@ -21,7 +21,7 @@ def genetic_algorithm(population, fn_fitness, E2Ns_len, gene_pool, fn_thres=None
 
         population = new_population
 
-        if fn_thres is not None and real_cost(best_individual) == fn_thres:
+        if fn_thres is not None and ceil(real_cost(best_individual)) == ceil(fn_thres):
             return best_individual
 
         best_individual = min(population, key=individual_cost)
@@ -136,6 +136,10 @@ def define_model(UEs, E2Ns, total_BW):
     # Initialize population
     population = init_population(possible_values_teste, population_length, fn_fitness, E2Ns_len)
 
+    if len(UEs) > 128:
+        pmut = 0.5
+    else:
+        pmut = 0.3
 
     # Run the genetic algorithm
     data = genetic_algorithm(
@@ -143,8 +147,9 @@ def define_model(UEs, E2Ns, total_BW):
         fn_fitness,
         E2Ns_len,
         gene_pool=possible_values_teste,
-        ngen=2000,
-        pmut=0.5
+        ngen=50000,
+        pmut=pmut,
+        fn_thres=fn_thres
     )
 
     RF_energy = data[1][3]
